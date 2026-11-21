@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/game-ui-image-to-godot/ui-manifest.schema.json",
+  "title": "Game UI to Godot manifest",
+  "type": "object",
+  "required": ["schema_version", "project", "source_image", "elements"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "project": {
+      "type": "object",
+      "required": ["name", "design_size", "scene_path", "script_path"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "design_size": {"type": "array", "prefixItems": [{"type": "number", "exclusiveMinimum": 0}, {"type": "number", "exclusiveMinimum": 0}], "minItems": 2, "maxItems": 2},
+        "scene_path": {"type": "string", "minLength": 1},
+        "script_path": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "source_image": {"type": "string", "minLength": 1},
+    "bbox_units": {"enum": ["normalized", "pixels"], "default": "normalized"},
+    "background": {"$ref": "#/$defs/cropElement"},
+    "elements": {"type": "array", "items": {"$ref": "#/$defs/element"}}
+  },
+  "$defs": {
+    "bbox": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}, {"type": "number", "exclusiveMinimum": 0}, {"type": "number", "exclusiveMinimum": 0}], "minItems": 4, "maxItems": 4},
+    "cropElement": {
+      "type": "object",
+      "required": ["id", "bbox", "output"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "type": {"enum": ["background", "image"]},
+        "bbox": {"$ref": "#/$defs/bbox"},
+        "bbox_units": {"enum": ["normalized", "pixels"]},
+        "source": {"type": "string"},
+        "output": {"type": "string", "pattern": "\\.png$"},
+        "fit": {"enum": ["stretch", "tile", "keep", "keep_centered", "contain", "cover"]},
+        "z_index": {"type": "integer"}
+      },
+      "additionalProperties": true
+    },
+    "element": {
+      "type": "object",
+      "required": ["id", "type", "bbox"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "type": {"enum": ["image", "button", "panel", "label"]},
+        "bbox": {"$ref": "#/$defs/bbox"},
+        "bbox_units": {"enum": ["normalized", "pixels"]},
+        "source": {"type": "string"},
+        "output": {"type": "string", "pattern": "\\.png$"},
+        "text": {"type": "string"},
+        "font_size": {"type": "number", "exclusiveMinimum": 0},
+        "font_color": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 4}]},
+        "action": {"type": "string"},
+        "z_index": {"type": "integer"},
+        "padding": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 4, "maxItems": 4}]},
+        "states": {"type": "object", "additionalProperties": {"type": "object"}},
+        "nine_patch": {"type": "object", "properties": {"left": {"type": "integer", "minimum": 0}, "top": {"type": "integer", "minimum": 0}, "right": {"type": "integer", "minimum": 0}, "bottom": {"type": "integer", "minimum": 0}}}
+      },
+      "allOf": [
+        {"if": {"properties": {"type": {"const": "label"}}}, "then": {"required": ["text"]}},
+        {"if": {"properties": {"type": {"enum": ["image", "button", "panel"]}}}, "then": {"required": ["output"]}}
+      ],
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

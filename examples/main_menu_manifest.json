@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "project": {
+    "name": "MainMenu",
+    "design_size": [1920, 1080],
+    "scene_path": "scenes/ui/main_menu.tscn",
+    "script_path": "scripts/ui/main_menu.gd"
+  },
+  "source_image": "design/main_menu.png",
+  "bbox_units": "normalized",
+  "background": {
+    "id": "background",
+    "type": "background",
+    "bbox": [0.0, 0.0, 1.0, 1.0],
+    "output": "assets/ui/background.png",
+    "fit": "cover",
+    "z_index": -100
+  },
+  "elements": [
+    {
+      "id": "game_logo",
+      "type": "image",
+      "bbox": [0.27, 0.08, 0.46, 0.2],
+      "output": "assets/ui/game_logo.png",
+      "stretch_mode": 5,
+      "z_index": 5
+    },
+    {
+      "id": "start_button",
+      "type": "button",
+      "bbox": [0.39, 0.52, 0.22, 0.09],
+      "output": "assets/ui/start_button.png",
+      "states": {
+        "hover": {
+          "bbox": [0.39, 0.62, 0.22, 0.09],
+          "output": "assets/ui/start_button_hover.png"
+        },
+        "pressed": {
+          "bbox": [0.39, 0.72, 0.22, 0.09],
+          "output": "assets/ui/start_button_pressed.png"
+        }
+      },
+      "text": "开始游戏",
+      "font_size": 34,
+      "font_color": "#FFFFFF",
+      "action": "start_game",
+      "z_index": 20
+    },
+    {
+      "id": "settings_button",
+      "type": "button",
+      "bbox": [0.39, 0.64, 0.22, 0.09],
+      "output": "assets/ui/settings_button.png",
+      "text": "设置",
+      "font_size": 30,
+      "action": "open_settings",
+      "z_index": 20
+    },
+    {
+      "id": "exit_button",
+      "type": "button",
+      "bbox": [0.39, 0.76, 0.22, 0.09],
+      "output": "assets/ui/exit_button.png",
+      "text": "退出",
+      "font_size": 30,
+      "action": "exit_game",
+      "z_index": 20
+    },
+    {
+      "id": "info_panel",
+      "type": "panel",
+      "bbox": [0.74, 0.68, 0.2, 0.24],
+      "output": "assets/ui/info_panel.png",
+      "nine_patch": {
+        "left": 32,
+        "top": 32,
+        "right": 32,
+        "bottom": 32
+      },
+      "z_index": 10
+    },
+    {
+      "id": "version_label",
+      "type": "label",
+      "bbox": [0.01, 0.95, 0.25, 0.035],
+      "text": "Version 0.1.0",
+      "font_size": 18,
+      "font_color": "#D9D9D9",
+      "horizontal_alignment": 0,
+      "vertical_alignment": 1,
+      "z_index": 30
+    }
+  ]
+}

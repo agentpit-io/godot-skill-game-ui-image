@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game UI → Godot"
+  short_description: "Slice game UI images and generate Godot 4 scenes"
+  default_prompt: "Use $game-ui-image-to-godot to convert this game UI design image into organized assets and a Godot 4 UI scene."
